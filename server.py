@@ -6,6 +6,7 @@ from uuid import uuid4
 from flask import Flask
 from blockchain import Blockchain
 from flask import jsonify, request
+import sys
 
 # Instantiate our Node
 app = Flask(__name__)
@@ -102,4 +103,7 @@ def consensus():
     return jsonify(response), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    port = 5001  # Default port
+    if len(sys.argv) > 1:
+        port = int(sys.argv[1].replace('--port=', ''))
+    app.run(host='0.0.0.0', port=port, debug=True)
